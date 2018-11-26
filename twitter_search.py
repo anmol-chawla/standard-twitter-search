@@ -1,7 +1,6 @@
 import requests
 import yaml
 import base64
-import pprint
 
 
 with open('cred.yml', 'r') as cred_file:
@@ -67,6 +66,3 @@ def get_format_tweets(response_json):
         tweet['type'] = 'tweet'
         data.append(tweet)
     return data
-
-
-pprint.pprint(get_format_tweets(search_tweets('#YOLO')))

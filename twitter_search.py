@@ -1,6 +1,7 @@
 import requests
 import yaml
 import base64
+import pprint
 
 
 with open('cred.yml', 'r') as cred_file:
@@ -50,3 +51,22 @@ def search_tweets(query, geocode=None, lang='en', result_type='mixed', count='15
     response = requests.get(
         request_url, headers=request_headers, params=request_params)
     return response.json()
+
+
+def get_format_tweets(response_json):
+    data = []
+    for dic in response_json['statuses']:
+        tweet = {}
+        tweet['text'] = dic['text']
+        try:
+            tweet['link'] = 'https://www.twitter.com/' + \
+                dic['user']['screen_name'] + '/status/' + str(dic['id'])
+        except Exception:
+            tweet['link'] = None
+        tweet['image'] = dic['user']['profile_image_url_https']
+        tweet['type'] = 'tweet'
+        data.append(tweet)
+    return data
+
+
+pprint.pprint(get_format_tweets(search_tweets('#YOLO')))

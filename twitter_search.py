@@ -55,8 +55,9 @@ def search_tweets(query, geocode=None, lang='en', result_type='mixed', count='15
 def get_format_tweets(response_json):
     data = []
     for dic in response_json['statuses']:
+
         tweet = {}
-        tweet['text'] = dic['text']
+        tweet['text'] = dic['text'].strip('\n')
         try:
             tweet['link'] = 'https://www.twitter.com/' + \
                 dic['user']['screen_name'] + '/status/' + str(dic['id'])
